@@ -34,6 +34,7 @@ const keys = {
     R : 82,
     S : 83,
     W : 87,
+    N: 78,
     LastKeyCode: 222
 }
 

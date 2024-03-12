@@ -10,7 +10,7 @@ class MyGame extends engine.GameScene {
         this.mCamera = null;
         this.squareSet = [];
         this.mSceneFile = './assets/scene.xml';
-        this.mBackgroundAudio = 'assets/sounds/bg_music.mp3';
+        this.mBackgroundAudio = 'assets/sounds/bg_music.wav';
         this.mCueMusic = 'assets/sounds/cue_music.mp3';
     }
 
@@ -21,14 +21,12 @@ class MyGame extends engine.GameScene {
     }
 
     unload(){
-        console.log('unloading the xml file');
         engine.xmlResource.unload(this.mSceneFile);
         engine.audio.unload(this.mBackgroundAudio);
         engine.audio.unload(this.mCueMusic);
     }
 
     init(){
-        console.log('my game init...');
         let sceneParser = new SceneFileParser(engine.xmlResource.get(this.mSceneFile));
         this.mCamera = sceneParser.parseCamera();
         sceneParser.parseSquares(this.squareSet);
@@ -39,20 +37,16 @@ class MyGame extends engine.GameScene {
         let transform = this.squareSet[0].getTransform();
         let deltax = 0.05;
         transform.incXPosBy(deltax);    
-        if(KeyInfo.isKeyPressed(KeyInfo.keys.F)){
-            console.log('start next scene');
+        if(KeyInfo.isKeyPressed(KeyInfo.keys.N)){
             this.next();
         }
         if(KeyInfo.isKeyPressed(KeyInfo.keys.Up)){
-            console.log('increase volume');
             engine.audio.incBackgroundVolume(0.5);
         }
         if(KeyInfo.isKeyPressed(KeyInfo.keys.Down)){
-            console.log('decrease volume');
             engine.audio.incBackgroundVolume(-0.5);
         }
         if(KeyInfo.isKeyClicked(KeyInfo.keys.I)){
-            console.log('I key pressed');
             engine.audio.playCue(this.mCueMusic, 1);
         }
      }
@@ -76,18 +70,8 @@ class MyGame extends engine.GameScene {
 
 let startButton = document.getElementById('startButton');
 startButton.onclick = function(e){
-    console.log('clicked the buton..');
-//    engine.audio.enableAudioSupport();
-    engine.init('GLCanvas');
-    let game = new MyGame();
-    game.start();
-}
-
-/*
-window.button.onClick = function(e){
     engine.audio.enableAudioSupport();
     engine.init('GLCanvas');
     let game = new MyGame();
     game.start();
 }
-*/

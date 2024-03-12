@@ -6,6 +6,7 @@ class BlueLevel extends engine.GameScene {
     constructor(){
         super();
         this.blueSquare = null;
+        this.mCueMusic = 'assets/sounds/cue_music.mp3';
     }
     
     init(){
@@ -21,10 +22,21 @@ class BlueLevel extends engine.GameScene {
         this.blueSquare.getTransform().setHeight(2);
     }
 
+    load(){
+        engine.audio.load(this.mCueMusic);
+    }
+
+    unload(){
+        engine.audio.unload(this.mCueMusic);
+    }
+
     update(){
         let delta = 0.05;
         if(KeyInfo.isKeyPressed(KeyInfo.keys.D)){
-            this.blueSquare.getTransform().incXPosBy(delta);            
+            this.blueSquare.getTransform().incXPosBy(delta);    
+        }
+        if(KeyInfo.isKeyClicked(KeyInfo.keys.D)){
+            engine.audio.playCue(this.mCueMusic, 1);
         }
         if(KeyInfo.isKeyPressed(KeyInfo.keys.A)){ 
             this.blueSquare.getTransform().incXPosBy(-delta);
