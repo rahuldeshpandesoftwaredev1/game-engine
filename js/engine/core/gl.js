@@ -24,4 +24,15 @@ function init(canvasID){
     }   
 }
 
-export {init, get}
+function cleanUp(){
+    if((mGL == null) || (mCanvas == null)){
+        throw new Error('Engine cleanup error: engine was never initialized..');
+    }
+    mGL = null;
+    mCanvas.style.position = 'fixed';
+    mCanvas.style.backgroundColor = 'rgba(200, 200, 200, 0.5)';
+    mCanvas = null;
+    document.body.innerHTML += '<br>End of game..'
+}
+
+export {init, get, cleanUp}

@@ -49,6 +49,8 @@ function onKeyUp(event){
     mIsKeyPressed[event.keyCode] = false;
 }
 
+function cleanUp(){}
+
 function init(){
     let i;
     for(i = 0; i < keys.LastKeyCode; i++){
@@ -76,4 +78,4 @@ function isKeyClicked(keyCode){
     return mIsKeyClicked[keyCode];
 }
 
-export {keys, init, update, isKeyClicked, isKeyPressed};
+export {keys, init, update, cleanUp, isKeyClicked, isKeyPressed};

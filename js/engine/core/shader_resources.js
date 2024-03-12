@@ -33,6 +33,12 @@ function init(){
 
 function getConstColorShader() {  return mConstantColorShader; }
 
-export {init, getConstColorShader };
+function cleanUp(){
+    mConstantColorShader.cleanUp();
+    text.unload(simpleVertexShader);
+    text.unload(simpleFragmentShader);
+}
+
+export {init, cleanUp, getConstColorShader };
 
 

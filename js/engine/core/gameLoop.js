@@ -1,5 +1,5 @@
 'use strict';
-import * as input from '../input.js';
+import * as KeyInfo from '../input.js';
 import * as map from './resource_map.js';
 
 const kUpdatePerSecond = 60;
@@ -22,7 +22,7 @@ function gameLoop(){
         mLagTime += elapsedTime;
 
         while ((mLagTime >= kMPU) && mLoopRunning){
-            input.update();
+            KeyInfo.update();
             mCurrentScene.update();
             mLagTime -= kMPU;
         }
@@ -35,11 +35,10 @@ async function start(scene){
     }
 
     mCurrentScene = scene;
-    mCurrentScene.loadResources();
-
+    mCurrentScene.load();
     // Ensure all resources are loaded.
     await map.waitOnPromises();
-    input.init();
+
     mCurrentScene.init();
 
     mPreviousTime = performance.now();
@@ -53,4 +52,12 @@ function stop(){
     cancelAnimationFrame(mFrameID);
 }
 
-export {start, stop};
+function cleanUp(){
+    if(mLoopRunning){
+        stop();
+        mCurrentScene.unload();
+        mCurrentScene = null;
+    }
+}
+
+export {start, stop, cleanUp};
