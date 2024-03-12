@@ -33,10 +33,13 @@ async function start(scene){
     if(mLoopRunning){
         throw new Error('loop is already running...');
     }
+
+    mCurrentScene = scene;
+    mCurrentScene.loadResources();
+
     // Ensure all resources are loaded.
     await map.waitOnPromises();
     input.init();
-    mCurrentScene = scene;
     mCurrentScene.init();
 
     mPreviousTime = performance.now();
