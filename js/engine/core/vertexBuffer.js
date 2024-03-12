@@ -1,5 +1,5 @@
 'use strict';
-import * as core from './gl.js';
+import * as glSystem from './gl.js';
 
 let vertexBuffer = null;
 function get(){
@@ -14,7 +14,7 @@ let verticesOfSquare = [
 ];
 
 function init(){
-    let gl = core.get();
+    let gl = glSystem.get();
     // Create an empty buffer.
     vertexBuffer = gl.createBuffer();
     // Activate this buffer. Make sure its the active one.
@@ -23,4 +23,11 @@ function init(){
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verticesOfSquare), gl.STATIC_DRAW);
 }
 
-export {init, get}
+function cleanUp(){
+    if(vertexBuffer !== null){
+        glSystem.get().deleteBuffer(vertexBuffer);
+        vertexBuffer = null;
+    }
+}
+
+export {init, get, cleanUp}

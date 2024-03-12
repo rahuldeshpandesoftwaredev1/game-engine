@@ -11,14 +11,16 @@ class SimpleShader{
         this.mPixelColorPointer = null;
         this.mTrsMatrixAttributePointer = null;
         this.mCameraTransformMatrix = null;
+        this.mVertexShader = null;
+        this.mFragmentShader = null;
 
         let gl = glSystem.get();
-        let vertexShader = compileShader(vertexShaderPath, gl.VERTEX_SHADER);
-        let fragmentShader = compileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
+        this.mVertexShader = compileShader(vertexShaderPath, gl.VERTEX_SHADER);
+        this.mFragmentShader = compileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
 
         this.mCompiledProgram = gl.createProgram();
-        gl.attachShader(this.mCompiledProgram, vertexShader);
-        gl.attachShader(this.mCompiledProgram, fragmentShader);
+        gl.attachShader(this.mCompiledProgram, this.mVertexShader);
+        gl.attachShader(this.mCompiledProgram, this.mFragmentShader);
         gl.linkProgram(this.mCompiledProgram);
 
         if(!gl.getProgramParameter(this.mCompiledProgram, gl.LINK_STATUS)){
@@ -48,6 +50,15 @@ class SimpleShader{
         gl.uniformMatrix4fv(this.mTrsMatrixAttributePointer, false, trsMatrix);
         gl.uniformMatrix4fv(this.mCameraTransformMatrix, false, cameraTransformMatrix);
     }
+
+    cleanUp(){
+        let gl = glSystem.get();
+        gl.detachShader(this.mCompiledProgram, this.mVertexShader);
+        gl.detachShader(this.mCompiledProgram, this.mFragmentShader);
+        gl.deleteShader(this.mVertexShader);
+        gl.deleteShader(this.mFragmentShader);
+        gl.deleteProgram(this.mCompiledProgram);
+    }
 }
 
 // this method cannot be accessed outside.
@@ -69,5 +80,7 @@ function compileShader(filePath, shaderType){
     }
     return shaderComponent;
 }
+
+
 
 export default SimpleShader;

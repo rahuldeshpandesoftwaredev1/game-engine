@@ -51,6 +51,7 @@ function unload(path){
     let entry = mMap.get(path);
     entry.decrementReference();
     if(entry.canRemove()){
+        console.log('deleting resource at path = ' + path);
         mMap.delete(path);
     }
     return entry.canRemove();

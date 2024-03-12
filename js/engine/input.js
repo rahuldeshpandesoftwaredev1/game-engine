@@ -34,6 +34,7 @@ const keys = {
     R : 82,
     S : 83,
     W : 87,
+    N: 78,
     LastKeyCode: 222
 }
 
@@ -48,6 +49,8 @@ function onKeyDown(event){
 function onKeyUp(event){
     mIsKeyPressed[event.keyCode] = false;
 }
+
+function cleanUp(){}
 
 function init(){
     let i;
@@ -76,4 +79,4 @@ function isKeyClicked(keyCode){
     return mIsKeyClicked[keyCode];
 }
 
-export {keys, init, update, isKeyClicked, isKeyPressed};
+export {keys, init, update, cleanUp, isKeyClicked, isKeyPressed};
