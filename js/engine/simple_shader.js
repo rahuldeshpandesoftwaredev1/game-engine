@@ -1,16 +1,20 @@
 import * as glSystem from './core/gl.js';
 import * as vertexBuffer from './core/vertexBuffer.js';
+import * as textResources from './resources/text.js';
+
 
 class SimpleShader{
 
     constructor(vertexShaderPath, fragmentShaderPath){
+        console.log('constreuctor of simple ahader');
         this.mVertexPositionAttributePointer = null;
         this.mPixelColorPointer = null;
         this.mTrsMatrixAttributePointer = null;
+        this.mCameraTransformMatrix = null;
 
         let gl = glSystem.get();
-        let vertexShader = loadAndCompileShader(vertexShaderPath, gl.VERTEX_SHADER);
-        let fragmentShader = loadAndCompileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
+        let vertexShader = compileShader(vertexShaderPath, gl.VERTEX_SHADER);
+        let fragmentShader = compileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
 
         this.mCompiledProgram = gl.createProgram();
         gl.attachShader(this.mCompiledProgram, vertexShader);
@@ -24,9 +28,10 @@ class SimpleShader{
         this.mVertexPositionAttributePointer = gl.getAttribLocation(this.mCompiledProgram, 'vertexPosition');    
         this.mPixelColorPointer = gl.getUniformLocation(this.mCompiledProgram, 'pixelColor');
         this.mTrsMatrixAttributePointer = gl.getUniformLocation(this.mCompiledProgram, 'uTrsMatrix');
+        this.mCameraTransformMatrix = gl.getUniformLocation(this.mCompiledProgram, 'uCameraTransformMatrix');
     }
 
-    activate(pixelColor, trsMatrix){
+    activate(pixelColor, trsMatrix, cameraTransformMatrix){
         let gl = glSystem.get();
         gl.useProgram(this.mCompiledProgram);
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.get());
@@ -41,26 +46,18 @@ class SimpleShader{
         gl.enableVertexAttribArray(this.mVertexPositionAttributePointer);
         gl.uniform4fv(this.mPixelColorPointer, pixelColor);
         gl.uniformMatrix4fv(this.mTrsMatrixAttributePointer, false, trsMatrix);
+        gl.uniformMatrix4fv(this.mCameraTransformMatrix, false, cameraTransformMatrix);
     }
 }
 
 // this method cannot be accessed outside.
-function loadAndCompileShader(filePath, shaderType){
-    let xmlRequest = null;
+function compileShader(filePath, shaderType){
     let gl = glSystem.get();
-
-    xmlRequest = new XMLHttpRequest();
-    xmlRequest.open('GET', filePath, false);
-    try{
-        xmlRequest.send();
-    }
-    catch(error){
-        throw new Error('could not fetch the shader...');
-    }
-
-    let shaderSource = xmlRequest.responseText;
-    if(shaderSource == null){
-        throw new Error('shader couild not be initlaized..');
+    let shaderSource = textResources.get(filePath);
+    if(shaderSource == null)
+    {
+        throw new Error('Warning: ' + shaderSource + ' not found!');
+        return null;
     }
 
     let shaderComponent = gl.createShader(shaderType);

@@ -22,7 +22,6 @@ function init(canvasID){
         document.write('WebGL is not supported on your browser.');
         return;
     }   
-    // Set the clear color.
 }
 
 export {init, get}

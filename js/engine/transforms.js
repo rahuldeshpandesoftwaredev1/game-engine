@@ -25,7 +25,19 @@ class Transform{
     setPosition(xPosition, yPosition)
     {
         this.setXPos(xPosition);
-        this.setXPos(yPosition);
+        this.setYPos(yPosition);
+    }
+
+    incXPosBy(amount){
+        this.mPosition[0] += amount;
+    }
+
+    incYPosBy(amount){
+        this.mPosition[1] += amount;
+    }
+
+    incRotationByDegrees(degrees){
+        this.mRotationInRadians += this.convertToRadians(degrees);
     }
 
     getPosition(){
@@ -53,6 +65,11 @@ class Transform{
         this.setHeight(height);
     }
 
+    incSizeBy(amount){
+        this.mScale[0] += amount;
+        this.mScale[1] += amount;
+    }
+
     getSize(){
         return this.mScale;
     }
@@ -64,9 +81,13 @@ class Transform{
             this.mRotationInRadians -= (2 * Math.PI);
         }
     }
+
+    convertToRadians(rotationInDegree){
+        return rotationInDegree * Math.PI / 180.0;
+    }
     
     setRotationInDegrees(rotationInDegree){
-        this.setRotationInRadians(rotationInDegree * Math.PI / 180.0);
+        this.setRotationInRadians(this.convertToRadians(rotationInDegree));
     }
 
     getRotationInRadians(){
