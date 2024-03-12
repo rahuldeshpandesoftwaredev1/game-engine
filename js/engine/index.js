@@ -6,6 +6,7 @@ import Transform from './transforms.js';
 import Camera from './Camera.js';
 import * as input from './input.js';
 import * as text from './resources/text.js';
+import * as xmlResource from './resources/xml.js';
 
 function init(htmlCanvasID){
     glSystem.init(htmlCanvasID);
@@ -21,4 +22,4 @@ function clearCanvas(color){
 
 console.log('running..');
 
-export default {Renderable, Transform, Camera, init, input, text, clearCanvas};
+export default {Renderable, Transform, Camera, init, input, text, xmlResource, clearCanvas};

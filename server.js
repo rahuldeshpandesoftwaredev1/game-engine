@@ -3,7 +3,8 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.static('js'));
+app.use('', express.static(__dirname + '/js'));
+app.use('/assets', express.static(__dirname + '/assets'));
 
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, 'index.html'));
