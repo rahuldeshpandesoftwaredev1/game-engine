@@ -9,12 +9,14 @@ import * as text from './resources/text.js';
 import * as xmlResource from './resources/xml.js';
 import GameScene from './game_scene.js';
 import * as gameLoop from './core/gameLoop.js';
+import * as audio from './resources/audio.js';
 
 function init(htmlCanvasID){
     glSystem.init(htmlCanvasID);
     vertexBuffer.init();
     shaderResources.init();
     input.init();
+    audio.init();
 }
 
 function clearCanvas(color){
@@ -29,8 +31,9 @@ function cleanUp(){
     shaderResources.cleanUp();
     vertexBuffer.cleanUp();
     glSystem.cleanUp();
+    audio.cleanUp();
 }
 
 console.log('running..');
 
-export default {Renderable, Transform, Camera, GameScene, init, input, text, xmlResource, cleanUp, clearCanvas};
+export default {Renderable, Transform, Camera, GameScene, init, input, text, audio, xmlResource, cleanUp, clearCanvas};
