@@ -1,6 +1,6 @@
-import * as glSystem from './core/gl.js';
-import * as shaderResources from './core/shader_resources.js';
-import Transform from './transforms.js';
+import * as glSystem from '../core/gl.js'
+import * as shaderResources from '../core/shader_resources.js';
+import Transform from '../transforms.js';
 
 class Renderable{
     constructor(){
@@ -25,6 +25,10 @@ class Renderable{
 
     getColor(){
         return this.mColor;
+    }
+
+    _setShader(shader){
+        this.mShader = shader;
     }
 }
 

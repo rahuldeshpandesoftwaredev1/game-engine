@@ -2,9 +2,7 @@
 import * as glSystem from './gl.js';
 
 let vertexBuffer = null;
-function get(){
-    return vertexBuffer;
-}
+let textureCoordinateBuffer = null;
 
 let verticesOfSquare = [
     0.5, 0.5, 0,
@@ -12,6 +10,21 @@ let verticesOfSquare = [
     0.5, -0.5, 0,
     -0.5, -0.5, 0
 ];
+
+let coordinatesOfTexture = [
+    1.0, 1.0,
+    0.0, 1.0,
+    1.0, 0.0,
+    0.0, 0.0
+]
+
+function get(){
+    return vertexBuffer;
+}
+
+function getTextureCoordinatesBuffer(){
+    return textureCoordinateBuffer;
+}
 
 function init(){
     let gl = glSystem.get();
@@ -21,6 +34,11 @@ function init(){
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     // load the data into the active buffer
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verticesOfSquare), gl.STATIC_DRAW);
+
+    // Init the texture coordinate buffer and bind accordingly.
+    textureCoordinateBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, textureCoordinateBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coordinatesOfTexture), gl.STATIC_DRAW);
 }
 
 function cleanUp(){
@@ -28,6 +46,11 @@ function cleanUp(){
         glSystem.get().deleteBuffer(vertexBuffer);
         vertexBuffer = null;
     }
+
+    if(textureCoordinateBuffer !== null){
+        glSystem.get().deleteBuffer(textureCoordinateBuffer);
+        textureCoordinateBuffer = null;
+    }
 }
 
-export {init, get, cleanUp}
+export {init, get, getTextureCoordinatesBuffer, cleanUp}

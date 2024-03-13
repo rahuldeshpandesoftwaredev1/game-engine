@@ -15,13 +15,21 @@ function init(canvasID){
         throw new Error('Canvas of id  = ' + canvasID + ' does nto exist.');
     }
     
-    mGL = mCanvas.getContext('webgl2') || canvas.getContext('experimental-webgl2');
+    // Ensure the canvas is opaque. That way its faster to draw transparent content on the canvas.
+    mGL = mCanvas.getContext('webgl2', {alpha: false}) || canvas.getContext('experimental-webgl2', {alpha: false});
     
     if(mGL == null)
     {
         document.write('WebGL is not supported on your browser.');
         return;
-    }   
+    } 
+    
+    // Enable transparency for textures.
+    mGL.blendFunc(mGL.SRC_ALPHA, mGL.ONE_MINUS_SRC_ALPHA);
+    mGL.enable(mGL.BLEND);
+
+    // Define texture coordinate space with lower left as origin.
+    mGL.pixelStorei(mGL.UNPACK_FLIP_Y_WEBGL, true);
 }
 
 function cleanUp(){

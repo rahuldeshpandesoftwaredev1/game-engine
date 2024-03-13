@@ -1,12 +1,15 @@
 import engine from '../engine/index.js';
-import Renderable from '../engine/Renderable.js';
+import Renderable from '../engine/renderables/Renderable.js'
+import TextureRenderable from '../engine/renderables/TextureRenderable.js';
 let KeyInfo = engine.input;
 
 class BlueLevel extends engine.GameScene {
     constructor(){
         super();
         this.blueSquare = null;
+        this.pawnSoldier = null;
         this.mCueMusic = 'assets/sounds/cue_music.mp3';
+        this.mTexturePath = 'assets/images/pawn.png';
     }
     
     init(){
@@ -15,19 +18,29 @@ class BlueLevel extends engine.GameScene {
             20,
             [20, 40, 600, 300]
         );
+
         this.blueSquare = new Renderable();
         this.blueSquare.getTransform().setXPos(20);
         this.blueSquare.getTransform().setYPos(60);
         this.blueSquare.getTransform().setWidth(3);
         this.blueSquare.getTransform().setHeight(2);
+
+        // Init happens after load
+        this.pawnSoldier = new TextureRenderable(this.mTexturePath);
+        this.pawnSoldier.getTransform().setXPos(24);
+        this.pawnSoldier.getTransform().setYPos(60);
+        this.pawnSoldier.getTransform().setWidth(2);
+        this.pawnSoldier.getTransform().setHeight(2);
     }
 
     load(){
+        engine.textureResource.load(this.mTexturePath);
         engine.audio.load(this.mCueMusic);
     }
 
     unload(){
         engine.audio.unload(this.mCueMusic);
+        engine.textureResource.unload(this.mTexturePath);
     }
 
     update(){
@@ -54,7 +67,8 @@ class BlueLevel extends engine.GameScene {
     draw(){
         engine.clearCanvas(this.mClearColor);
         this.mCamera.setViewPortAndCameraMatrix();
-        this.blueSquare.draw(this.mCamera);
+      //  this.blueSquare.draw(this.mCamera);
+        this.pawnSoldier.draw(this.mCamera);
     }
 }
 

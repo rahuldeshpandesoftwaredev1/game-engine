@@ -1,12 +1,14 @@
 import * as glSystem from './core/gl.js';
 import * as vertexBuffer from './core/vertexBuffer.js';
 import * as shaderResources from './core/shader_resources.js';
-import Renderable from './Renderable.js';
+import Renderable from '../engine/renderables/Renderable.js';
+import TextureRenderable from '../engine/renderables/TextureRenderable.js';
 import Transform from './transforms.js';
 import Camera from './Camera.js';
 import * as input from './input.js';
 import * as text from './resources/text.js';
 import * as xmlResource from './resources/xml.js';
+import * as textureResource from './resources/texture.js';
 import GameScene from './game_scene.js';
 import * as gameLoop from './core/gameLoop.js';
 import * as audio from './resources/audio.js';
@@ -29,6 +31,7 @@ function cleanUp(){
     input.cleanUp();
     gameLoop.cleanUp();
     shaderResources.cleanUp();
+    textureResource.deactivate();
     vertexBuffer.cleanUp();
     glSystem.cleanUp();
     audio.cleanUp();
@@ -36,4 +39,4 @@ function cleanUp(){
 
 console.log('running..');
 
-export default {Renderable, Transform, Camera, GameScene, init, input, text, audio, xmlResource, cleanUp, clearCanvas};
+export default {Renderable, TextureRenderable, Transform, Camera, GameScene, init, input, text, audio, xmlResource, textureResource, cleanUp, clearCanvas};
