@@ -26,7 +26,7 @@ class TextureRenderable extends Renderable {
     }
 
     setTexturePath(newTexture){
-        this.myTexture = newTexture;
+        this.myTexturePath = newTexture;
     }
 }
 

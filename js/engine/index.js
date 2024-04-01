@@ -1,8 +1,16 @@
 import * as glSystem from './core/gl.js';
 import * as vertexBuffer from './core/vertexBuffer.js';
 import * as shaderResources from './core/shader_resources.js';
+import * as fontResources from './resources/font.js';
+import * as defaultResources from './resources/default_resources.js';
 import Renderable from '../engine/renderables/Renderable.js';
 import TextureRenderable from '../engine/renderables/TextureRenderable.js';
+import SpriteRenderable from './renderables/SpriteRenderable.js';
+import SpriteAnimateRenderable from './renderables/SpriteAnimateRenderable.js';
+import FontRenderable from './renderables/FontRenderable.js';
+import { eAnimationType } from './renderables/SpriteAnimateRenderable.js';
+import { eTextureCoordinateArrayIndex } from './renderables/SpriteRenderable.js';
+
 import Transform from './transforms.js';
 import Camera from './Camera.js';
 import * as input from './input.js';
@@ -17,8 +25,9 @@ function init(htmlCanvasID){
     glSystem.init(htmlCanvasID);
     vertexBuffer.init();
     shaderResources.init();
+    defaultResources.init();
     input.init();
-    audio.init();
+    audio.init();    
 }
 
 function clearCanvas(color){
@@ -31,6 +40,7 @@ function cleanUp(){
     input.cleanUp();
     gameLoop.cleanUp();
     shaderResources.cleanUp();
+    defaultResources.cleanUp();
     textureResource.deactivate();
     vertexBuffer.cleanUp();
     glSystem.cleanUp();
@@ -39,4 +49,8 @@ function cleanUp(){
 
 console.log('running..');
 
-export default {Renderable, TextureRenderable, Transform, Camera, GameScene, init, input, text, audio, xmlResource, textureResource, cleanUp, clearCanvas};
+export default {Renderable, TextureRenderable, SpriteRenderable, SpriteAnimateRenderable, FontRenderable, 
+                eAnimationType, eTextureCoordinateArrayIndex, 
+                Transform, Camera, GameScene, 
+                init, input, text, audio, xmlResource, textureResource, defaultResources, fontResources, 
+                cleanUp, clearCanvas};

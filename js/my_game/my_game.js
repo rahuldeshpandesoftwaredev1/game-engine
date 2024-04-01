@@ -11,7 +11,7 @@ class MyGame extends engine.GameScene {
         this.squareSet = [];
         this.mSceneFile = './assets/scene.xml';
         this.mBackgroundAudio = 'assets/sounds/bg_music.wav';
-        this.mCueMusic = 'assets/sounds/cue_music.mp3';
+        this.mCueMusic = 'assets/sounds/cue_music.mp3';        
     }
 
     load(){

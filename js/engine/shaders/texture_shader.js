@@ -12,10 +12,14 @@ class TextureShader extends SimpleShader {
         this.mSamplerReference = gl.getUniformLocation(this.mCompiledProgram, 'textureSampler');
     }
 
+    _getTextureCoordinateBuffer(){
+        return vertexBuffer.getTextureCoordinatesBuffer();
+    }
+
     activate(pixelColor, trsMatrix, cameraMatrix){
         super.activate(pixelColor, trsMatrix, cameraMatrix);
         let gl = glSystem.get();
-        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.getTextureCoordinatesBuffer());
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._getTextureCoordinateBuffer());
         gl.vertexAttribPointer(this.mTextureCoordinateAttribPointer, 2, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(this.mTextureCoordinateAttribPointer);
         gl.uniform1i(this.mSamplerReference, 0);

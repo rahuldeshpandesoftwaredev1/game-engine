@@ -68,7 +68,6 @@ function compileShader(filePath, shaderType){
     if(shaderSource == null)
     {
         throw new Error('Warning: ' + shaderSource + ' not found!');
-        return null;
     }
 
     let shaderComponent = gl.createShader(shaderType);
@@ -81,7 +80,5 @@ function compileShader(filePath, shaderType){
     }
     return shaderComponent;
 }
-
-
 
 export default SimpleShader;
