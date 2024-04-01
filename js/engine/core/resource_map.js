@@ -35,6 +35,7 @@ function get(path){
 }
 
 function set(key, value){
+    console.log('key = ' + key);
     mMap.get(key).set(value);
 }
 

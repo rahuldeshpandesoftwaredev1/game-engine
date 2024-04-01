@@ -1,12 +1,12 @@
-import * as glSystem from './core/gl.js';
-import * as vertexBuffer from './core/vertexBuffer.js';
-import * as textResources from './resources/text.js';
+import * as glSystem from '../core/gl.js';
+import * as vertexBuffer from '../core/vertexBuffer.js';
+import * as textResources from '../resources/text.js';
 
 
 class SimpleShader{
 
     constructor(vertexShaderPath, fragmentShaderPath){
-        console.log('constreuctor of simple ahader');
+        console.log('constreuctor of simple shader');
         this.mVertexPositionAttributePointer = null;
         this.mPixelColorPointer = null;
         this.mTrsMatrixAttributePointer = null;
@@ -77,6 +77,7 @@ function compileShader(filePath, shaderType){
 
     // Check for compiler errors.
     if(!gl.getShaderParameter(shaderComponent, gl.COMPILE_STATUS)){
+        console.error('Error compiling shader!', gl.getShaderInfoLog(shaderComponent));
     }
     return shaderComponent;
 }
